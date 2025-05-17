@@ -1,6 +1,5 @@
-// Updated home_page.dart with statistics and SOS button
 import 'package:flutter/material.dart';
-import 'lib/services/sos_service.dart'; // Adjust the path if needed
+import 'package:defendher/services/sos_service.dart';
 
 class DefendHerHomePage extends StatelessWidget {
   const DefendHerHomePage({super.key});
@@ -16,17 +15,14 @@ class DefendHerHomePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF6A1B9A),
+            UserAccountsDrawerHeader(
+              accountName: Text("Welcome!"),
+              accountEmail: Text(""),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.person, color: Colors.purple),
               ),
-              child: Text(
-                'DefendHer Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+              decoration: BoxDecoration(color: Color(0xFF6A1B9A)),
             ),
             ListTile(
               leading: const Icon(Icons.report),
@@ -39,9 +35,9 @@ class DefendHerHomePage extends StatelessWidget {
               onTap: () => navigateTo(context, '/safezones'),
             ),
             ListTile(
-              leading: const Icon(Icons.chat),
-              title: const Text('Community Chat'),
-              onTap: () => navigateTo(context, '/chat'),
+              leading: const Icon(Icons.fitness_center),
+              title: const Text('Self Defence'),
+              onTap: () => navigateTo(context, '/selfdefence'),
             ),
             ListTile(
               leading: const Icon(Icons.shield),
@@ -52,12 +48,40 @@ class DefendHerHomePage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        title: const Text(
-          'DefendHer',
-          style: TextStyle(color: Colors.black),
-        ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
+        title: Row(
+          children: [
+            Image.asset(
+              'assests/logo.png',
+              height: 40,
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              'DefendHer',
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => navigateTo(context, '/login'),
+            child: const Text(
+              'Login',
+              style: TextStyle(
+                color: Colors.purple,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu, color: Colors.black),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+            ),
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -91,51 +115,53 @@ class DefendHerHomePage extends StatelessWidget {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Center(
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 100,
-                      height: 100,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Center(
+                      child: Image.asset(
+                        'assests/logo.png',
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Welcome to DefendHer',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Welcome to DefendHer',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Your Safety, Our Priority',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 20,
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Your Safety, Our Priority',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "In a world where safety cannot be taken for granted, DefendHer empowers women with the tools they need to feel protected and in control. It's designed to react when you can’t, speak when you’re silent, and connect you with those who can help in critical moments. From emergency responses to real-time tracking, community awareness to personal empowerment—DefendHer covers every angle of your safety. Our mission is to ensure that no woman feels alone, unheard, or unprepared in the face of danger.",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  const SizedBox(height: 30),
-                  Wrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    children: [
-                      _statCard('Incidents Reported', '1,248'),
-                      _statCard('Safe Zones', '87'),
-                      _statCard('Community Members', '4,562'),
-                      _statCard('Tips Shared', '328'),
-                    ],
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    const Text(
+                      "In a world where safety cannot be taken for granted, DefendHer empowers women with the tools they need to feel protected and in control. It's designed to react when you can’t, speak when you’re silent, and connect you with those who can help in critical moments. From emergency responses to real-time tracking, community awareness to personal empowerment—DefendHer covers every angle of your safety. Our mission is to ensure that no woman feels alone, unheard, or unprepared in the face of danger.",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    const SizedBox(height: 30),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: [
+                        _statCard('Incidents Reported', '1,248'),
+                        _statCard('Safe Zones', '87'),
+                        _statCard('Community Members', '4,562'),
+                        _statCard('Tips Shared', '328'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -144,7 +170,6 @@ class DefendHerHomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           SOSService.triggerSOS(context);
-          // Add SOS functionality here
         },
         label: const Text('SOS'),
         icon: const Icon(Icons.warning),
@@ -159,7 +184,7 @@ class DefendHerHomePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 8,

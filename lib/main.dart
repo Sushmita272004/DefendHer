@@ -6,7 +6,7 @@ import 'pages/report_page.dart';
 import 'pages/safe_zone.dart';
 import 'pages/self_defence.dart';
 import 'pages/feature_page.dart';
-
+// import 'pages/chat_page.dart'; // Uncomment if you have this
 
 void main() {
   runApp(const DefendHerApp());
@@ -34,7 +34,7 @@ class DefendHerApp extends StatelessWidget {
         '/safezones': (context) => const SafeZonePage(),
         '/selfdefence': (context) => const SelfDefencePage(),
         '/features': (context) => const FeaturesPage(),
-        // Add other routes like '/chat' if you have it
+        // '/chat': (context) => const ChatPage(), // Add if available
       },
     );
   }
